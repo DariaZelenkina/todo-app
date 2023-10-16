@@ -27,13 +27,15 @@ function Task({ label, date, completed, onDelete, onToggleDone }) {
           type="button"
           aria-label="Edit"
           className="icon icon-edit"
-        ></button>
+        >
+        </button>
         <button
           type="button"
           aria-label="Delete"
           className="icon icon-destroy"
           onClick={onDelete}
-        ></button>
+        >
+        </button>
         <input type="text" className="edit" defaultValue="Editing task" />
       </div>
     </li>
