@@ -28,6 +28,7 @@ export default class App extends Component {
           });
         },
         completed: false,
+        edit: false,
         createdDate: Date.now() - 17000,
       },
       {
@@ -39,6 +40,7 @@ export default class App extends Component {
           });
         },
         completed: false,
+        edit: false,
         createdDate: Date.now() - 300000,
       },
       {
@@ -50,6 +52,7 @@ export default class App extends Component {
           });
         },
         completed: false,
+        edit: false,
         createdDate: Date.now() - 300000,
       },
     ],
@@ -91,6 +94,30 @@ export default class App extends Component {
     });
   };
 
+  editItem = (id, text) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+      const oldItem = todoData[idx];
+      const newItem = { ...oldItem, label: text, edit: false };
+      const newArr = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+      return {
+        todoData: newArr,
+      };
+    });
+  };
+
+  onEdit = (id) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+      const oldItem = todoData[idx];
+      const newItem = { ...oldItem, edit: !oldItem.edit };
+      const newArr = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+      return {
+        todoData: newArr,
+      };
+    });
+  };
+
   clearCompleted = () => {
     this.setState(({ todoData }) => {
       const items = todoData.filter((el) => !el.completed);
@@ -129,6 +156,8 @@ export default class App extends Component {
           tasks={filteredItems}
           onDelete={this.deleteItem}
           onToggleDone={this.onToggleDone}
+          onEdit={this.onEdit}
+          editItem={this.editItem}
         />
         <Footer
           todo={todoCount}
