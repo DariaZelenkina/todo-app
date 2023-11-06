@@ -30,6 +30,8 @@ export default class App extends Component {
         completed: false,
         edit: false,
         createdDate: Date.now() - 17000,
+        minutes: 12,
+        seconds: 25,
       },
       {
         id: 2,
@@ -42,6 +44,8 @@ export default class App extends Component {
         completed: false,
         edit: false,
         createdDate: Date.now() - 300000,
+        minutes: 12,
+        seconds: 25,
       },
       {
         id: 3,
@@ -54,6 +58,8 @@ export default class App extends Component {
         completed: false,
         edit: false,
         createdDate: Date.now() - 300000,
+        minutes: 12,
+        seconds: 25,
       },
     ],
     filter: "all",
@@ -87,9 +93,9 @@ export default class App extends Component {
     });
   };
 
-  addItem = (label) => {
+  addItem = (label, minutes, seconds) => {
     this.setState((state) => {
-      const item = this.createItem(label);
+      const item = this.createItem(label, minutes, seconds);
       return { todoData: [...state.todoData, item] };
     });
   };
@@ -131,7 +137,7 @@ export default class App extends Component {
     this.setState({ filter });
   };
 
-  createItem(label) {
+  createItem(label, minutes, seconds) {
     return {
       id: ++this.maxId,
       label,
@@ -141,7 +147,10 @@ export default class App extends Component {
         });
       },
       completed: false,
+      edit: false,
       createdDate: Date.now(),
+      minutes: +minutes,
+      seconds: +seconds,
     };
   }
 
@@ -150,21 +159,23 @@ export default class App extends Component {
     const todoCount = todoData.filter((el) => !el.completed).length;
     const filteredItems = App.filterItems(todoData, filter);
     return (
-      <section className="main">
+      <section className="todoapp">
         <AppHeader onAddItem={this.addItem} />
-        <TaskList
-          tasks={filteredItems}
-          onDelete={this.deleteItem}
-          onToggleDone={this.onToggleDone}
-          onEdit={this.onEdit}
-          editItem={this.editItem}
-        />
-        <Footer
-          todo={todoCount}
-          filter={filter}
-          onClearCompleted={this.clearCompleted}
-          onFilterChange={this.onFilterChange}
-        />
+        <section className="main">
+          <TaskList
+            tasks={filteredItems}
+            onDelete={this.deleteItem}
+            onToggleDone={this.onToggleDone}
+            onEdit={this.onEdit}
+            editItem={this.editItem}
+          />
+          <Footer
+            todo={todoCount}
+            filter={filter}
+            onClearCompleted={this.clearCompleted}
+            onFilterChange={this.onFilterChange}
+          />
+        </section>
       </section>
     );
   }
