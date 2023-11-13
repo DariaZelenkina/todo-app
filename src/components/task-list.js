@@ -22,7 +22,6 @@ TaskList.propTypes = {
     date: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     edit: PropTypes.bool,
-    createdDate: PropTypes.number.isRequired,
     minutes: PropTypes.number,
     seconds: PropTypes.number,
   })).isRequired,
